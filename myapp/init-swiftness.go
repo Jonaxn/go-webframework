@@ -2,10 +2,11 @@ package main
 
 import (
 	"log"
+	"myapp/data"
 	"myapp/handlers"
 	"os"
 
-	"github.com/Jonaxn/swiftness"
+	"github.com/jonaxn/swiftness"
 )
 
 func initApplication() *application {
@@ -33,6 +34,9 @@ func initApplication() *application {
 	}
 
 	app.App.Routes = app.routes()
+
+	app.Models = data.New(app.App.DB.Pool)
+	myHandlers.Models = app.Models
 
 	return app
 }

@@ -1,14 +1,16 @@
 package handlers
 
 import (
+	"myapp/data"
 	"net/http"
 
 	"github.com/CloudyKit/jet/v6"
-	"github.com/Jonaxn/swiftness"
+	"github.com/jonaxn/swiftness"
 )
 
 type Handlers struct {
-	App *swiftness.Swiftness
+	App    *swiftness.Swiftness
+	Models data.Models
 }
 
 func (h *Handlers) Home(w http.ResponseWriter, r *http.Request) {
