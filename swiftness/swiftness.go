@@ -8,12 +8,9 @@ import (
 	"strconv"
 	"time"
 
-	"github.com/CloudyKit/jet/v6"
-	"github.com/alexedwards/scs/v2"
-	"github.com/go-chi/chi/v5"
+	"github.com/Jonaxn/swiftness/render"
+	"github.com/Jonaxn/swiftness/session"
 	"github.com/joho/godotenv"
-	"github.com/jonaxn/swiftness/render"
-	"github.com/jonaxn/swiftness/session"
 )
 
 const version = "1.0.0"
@@ -115,6 +112,7 @@ func (c *Swiftness) New(rootPath string) error {
 		CookieName:     c.config.cookie.name,
 		SessionType:    c.config.sessionType,
 		CookieDomain:   c.config.cookie.domain,
+		DBPool:         c.DB.Pool,
 	}
 
 	c.Session = sess.InitSession()

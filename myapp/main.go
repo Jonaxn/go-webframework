@@ -3,14 +3,16 @@ package main
 import (
 	"myapp/data"
 	"myapp/handlers"
+	"myapp/middleware"
 
-	"github.com/jonaxn/swiftness"
+	"github.com/Jonaxn/swiftness"
 )
 
 type application struct {
-	App      *swiftness.Swiftness
-	Handlers *handlers.Handlers
-	Models   data.Models
+	App        *swiftness.Swiftness
+	Handlers   *handlers.Handlers
+	Models     data.Models
+	Middleware *middleware.Middleware
 }
 
 func main() {
