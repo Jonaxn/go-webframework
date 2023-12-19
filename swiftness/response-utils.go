@@ -19,7 +19,7 @@ func (c *Swiftness) WriteJSON(w http.ResponseWriter, status int, data interface{
 
 	w.Header().Set("Content-Type", "application/json")
 	w.WriteHeader(status)
-	_, err = w.Write(out)e
+	_, err = w.Write(out)
 	if err != nil {
 		return err
 	}

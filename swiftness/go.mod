@@ -10,6 +10,7 @@ require (
 	github.com/alexedwards/scs/mysqlstore v0.0.0-20210904201103-9ffa4cfa9323 // indirect
 	github.com/alexedwards/scs/postgresstore v0.0.0-20210904201103-9ffa4cfa9323 // indirect
 	github.com/alexedwards/scs/v2 v2.4.0 // indirect
+	github.com/asaskevich/govalidator v0.0.0-20210307081110-f21760c49a8d // indirect
 	github.com/fatih/color v1.12.0 // indirect
 	github.com/gertd/go-pluralize v0.1.7 // indirect
 	github.com/go-chi/chi/v5 v5.0.4 // indirect
