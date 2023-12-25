@@ -130,7 +130,7 @@ func (c *RedisCache) EmptyByMatch(str string) error {
 	}
 
 	for _, x := range keys {
-		err := c.Forget(x)
+		_, err := conn.Do("DEL", x)
 		if err != nil {
 			return err
 		}
@@ -150,7 +150,7 @@ func (c *RedisCache) Empty() error {
 	}
 
 	for _, x := range keys {
-		err = c.Forget(x)
+		_, err := conn.Do("DEL", x)
 		if err != nil {
 			return err
 		}
