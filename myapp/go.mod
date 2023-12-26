@@ -10,6 +10,7 @@ require (
 	github.com/go-chi/chi/v5 v5.0.4
 	github.com/jackc/pgconn v1.10.0
 	github.com/jackc/pgx/v4 v4.13.0
+	github.com/justinas/nosurf v1.1.1
 	github.com/ory/dockertest/v3 v3.7.0
 	github.com/Jonaxn/swiftness v0.0.0
 	github.com/upper/db/v4 v4.2.1
@@ -23,6 +24,7 @@ require (
 	github.com/Nvveen/Gotty v0.0.0-20120604004816-cd527374f1e5 // indirect
 	github.com/alexedwards/scs/mysqlstore v0.0.0-20210904201103-9ffa4cfa9323 // indirect
 	github.com/alexedwards/scs/postgresstore v0.0.0-20210904201103-9ffa4cfa9323 // indirect
+	github.com/alexedwards/scs/redisstore v0.0.0-20210904201103-9ffa4cfa9323 // indirect
 	github.com/alexedwards/scs/v2 v2.4.0 // indirect
 	github.com/asaskevich/govalidator v0.0.0-20210307081110-f21760c49a8d // indirect
 	github.com/cenkalti/backoff/v4 v4.1.0 // indirect

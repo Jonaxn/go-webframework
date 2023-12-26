@@ -22,6 +22,7 @@ require (
 
 require (
 	github.com/CloudyKit/fastprinter v0.0.0-20200109182630-33d98a066a53 // indirect
+	github.com/alexedwards/scs/redisstore v0.0.0-20210904201103-9ffa4cfa9323 // indirect
 	github.com/alicebob/gopher-json v0.0.0-20200520072559-a9ecdc9d1d3a // indirect
 	github.com/alicebob/miniredis/v2 v2.15.1 // indirect
 	github.com/hashicorp/errwrap v1.0.0 // indirect
@@ -32,6 +33,7 @@ require (
 	github.com/jackc/pgproto3/v2 v2.1.1 // indirect
 	github.com/jackc/pgservicefile v0.0.0-20200714003250-2b9c44734f2b // indirect
 	github.com/jackc/pgtype v1.8.1 // indirect
+	github.com/justinas/nosurf v1.1.1 // indirect
 	github.com/lib/pq v1.10.2 // indirect
 	github.com/mattn/go-colorable v0.1.8 // indirect
 	github.com/mattn/go-isatty v0.0.12 // indirect
