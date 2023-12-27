@@ -7,7 +7,7 @@ import (
 )
 
 type BadgerCache struct {
-	Conn   *badger.DB
+	Conn *badger.DB
 	Prefix string
 }
 
@@ -111,7 +111,7 @@ func (b *BadgerCache) emptyByMatch(str string) error {
 
 	collectSize := 100000
 
-	err := b.Conn.View(func(txn *badger.Txn) error {
+	err := b.Conn.View(func(txn *badger.Txn) error{
 		opts := badger.DefaultIteratorOptions
 		opts.AllVersions = false
 		opts.PrefetchValues = false
