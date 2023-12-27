@@ -13,14 +13,19 @@ import (
 	"github.com/Jonaxn/swiftness/render"
 	"github.com/Jonaxn/swiftness/session"
 	"github.com/alexedwards/scs/v2"
+	"github.com/dgraph-io/badger/v3"
 	"github.com/go-chi/chi/v5"
 	"github.com/gomodule/redigo/redis"
 	"github.com/joho/godotenv"
+	"github.com/robfig/cron/v3"
 )
 
 const version = "1.0.0"
 
 var myRedisCache *cache.RedisCache
+var myBadgerCache *cache.BadgerCache
+var redisPool *redis.Pool
+var badgerConn *badger.DB
 
 // Swiftness is the overall type for the Swiftness package. Members that are exported in this type
 // are available to any application that uses it.
@@ -39,6 +44,7 @@ type Swiftness struct {
 	config        config
 	EncryptionKey string
 	Cache         cache.Cache
+	Scheduler     *cron.Cron
 }
 
 type config struct {
@@ -90,9 +96,26 @@ func (c *Swiftness) New(rootPath string) error {
 		}
 	}
 
+	scheduler := cron.New()
+	c.Scheduler = scheduler
+
 	if os.Getenv("CACHE") == "redis" || os.Getenv("SESSION_TYPE") == "redis" {
 		myRedisCache = c.createClientRedisCache()
 		c.Cache = myRedisCache
+		redisPool = myRedisCache.Conn
+	}
+
+	if os.Getenv("CACHE") == "badger" {
+		myBadgerCache = c.createClientBadgerCache()
+		c.Cache = myBadgerCache
+		badgerConn = myBadgerCache.Conn
+
+		_, err = c.Scheduler.AddFunc("@daily", func() {
+			_ = myBadgerCache.Conn.RunValueLogGC(0.7)
+		})
+		if err != nil {
+			return err
+		}
 	}
 
 	c.InfoLog = infoLog
@@ -186,7 +209,17 @@ func (c *Swiftness) ListenAndServe() {
 		WriteTimeout: 600 * time.Second,
 	}
 
-	defer c.DB.Pool.Close()
+	if c.DB.Pool != nil {
+		defer c.DB.Pool.Close()
+	}
+
+	if redisPool != nil {
+		defer redisPool.Close()
+	}
+
+	if badgerConn != nil {
+		defer badgerConn.Close()
+	}
 
 	c.InfoLog.Printf("Listening on port %s", os.Getenv("PORT"))
 	err := srv.ListenAndServe()
@@ -230,6 +263,13 @@ func (c *Swiftness) createClientRedisCache() *cache.RedisCache {
 	return &cacheClient
 }
 
+func (c *Swiftness) createClientBadgerCache() *cache.BadgerCache {
+	cacheClient := cache.BadgerCache{
+		Conn: c.createBadgerConn(),
+	}
+	return &cacheClient
+}
+
 func (c *Swiftness) createRedisPool() *redis.Pool {
 	return &redis.Pool{
 		MaxIdle:     50,
@@ -246,6 +286,14 @@ func (c *Swiftness) createRedisPool() *redis.Pool {
 			return err
 		},
 	}
+}
+
+func (c *Swiftness) createBadgerConn() *badger.DB {
+	db, err := badger.Open(badger.DefaultOptions(c.RootPath + "/tmp/badger"))
+	if err != nil {
+		return nil
+	}
+	return db
 }
 
 // BuildDSN builds the datasource name for our database, and returns it as a string
