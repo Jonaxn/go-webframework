@@ -13,3 +13,7 @@ coverage:
 ## build_cli: builds the command line tool swiftness and copies it to myapp
 build_cli:
 	@go build -o ../myapp/swiftness ./cmd/cli
+
+## build: builds the command line tool dist directory
+build:
+	@go build -o ./dist/swiftness ./cmd/cli
