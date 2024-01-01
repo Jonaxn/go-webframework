@@ -17,3 +17,6 @@ build_cli:
 ## build: builds the command line tool dist directory
 build:
 	@go build -o ./dist/swiftness ./cmd/cli
+
+install_cli:
+	@go build -o ~/go/bin/swiftness -ldflags '-s -w' ./cmd/cli
